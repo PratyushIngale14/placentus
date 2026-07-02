@@ -157,6 +157,8 @@ if "selected_client" not in st.session_state:
     st.session_state.selected_client = None
 if "selected_employee" not in st.session_state:
     st.session_state.selected_employee = None
+if "dismissed_task_id" not in st.session_state:
+    st.session_state.dismissed_task_id = None
 
 @st.cache_resource
 def load_store(api_key: str | None):
@@ -168,20 +170,49 @@ store = load_store(st.session_state.api_key or None)
 # Header
 # ----------------------------------------------------------------------------
 
-st.markdown(f"""
-<div style="display:flex;align-items:center;gap:14px;">
-    <img src="{LOGO_DATA_URI}" width="44" height="44" style="border-radius:10px;" />
-    <div style="display:flex;flex-direction:column;gap:3px;">
-        <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};line-height:1.1;">Placentus</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
-            ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
-        </span>
+head_main, head_ledger = st.columns([6, 1])
+
+with head_main:
+    st.markdown(f"""
+    <div style="display:flex;align-items:center;gap:14px;">
+        <img src="{LOGO_DATA_URI}" width="44" height="44" style="border-radius:10px;" />
+        <div style="display:flex;flex-direction:column;gap:3px;">
+            <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};line-height:1.1;">Placentus</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
+                ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
+            </span>
+        </div>
     </div>
-</div>
-<div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:8px;">
-    Visibility into embedded consultants — sourced entirely from what they choose to share, never from client systems.
-</div>
-""", unsafe_allow_html=True)
+    <div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:8px;">
+        Visibility into embedded consultants — sourced entirely from what they choose to share, never from client systems.
+    </div>
+    """, unsafe_allow_html=True)
+
+with head_ledger:
+    st.markdown('<div style="margin-top:8px;"></div>', unsafe_allow_html=True)
+    with st.popover("🛡️ Trust Ledger", use_container_width=True):
+        st.markdown(ui.section_label("How the categorization layer routed every event — nothing is deleted, only routed"), unsafe_allow_html=True)
+
+        ledger_tiers = store.tier_breakdown()
+        lc1, lc2, lc3 = st.columns(3)
+        with lc1:
+            st.markdown(ui.colored_metric("Standard", str(ledger_tiers.get("standard", 0)), ui.TRUST), unsafe_allow_html=True)
+        with lc2:
+            st.markdown(ui.colored_metric("Restricted", str(ledger_tiers.get("restricted", 0)), ui.AMBER), unsafe_allow_html=True)
+        with lc3:
+            st.markdown(ui.colored_metric("Escalated", str(ledger_tiers.get("escalate", 0)), ui.ALERT), unsafe_allow_html=True)
+
+        st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
+        st.markdown(ui.section_label("Restricted & escalated events across the whole portfolio"), unsafe_allow_html=True)
+        ledger_emp_names = {e.id: e.name for e in store.employees.values()}
+        ledger_flagged = [e for e in store.events if e.tier != VisibilityTier.STANDARD]
+        if not ledger_flagged:
+            st.caption("Nothing restricted or escalated right now.")
+        for ev in ledger_flagged:
+            st.markdown(ui.event_card(ev, ledger_emp_names.get(ev.employee_id, "Unknown")), unsafe_allow_html=True)
+            if ev.matches:
+                reasons = ", ".join(f"`{m.category}`" for m in ev.matches)
+                st.caption(f"Routed because: {reasons}")
 
 st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
 
@@ -219,8 +250,8 @@ client = store.clients[st.session_state.selected_client]
 client_health = store.client_health(client.id)
 employees = store.employees_for_client(client.id)
 
-tab_overview, tab_employees, tab_calendar, tab_trust = st.tabs(
-    ["Overview", "Employees", "Calendar", "Trust Ledger"]
+tab_overview, tab_employees, tab_calendar = st.tabs(
+    ["Overview", "Employees", "Calendar"]
 )
 
 # ---- OVERVIEW TAB ----
@@ -399,43 +430,47 @@ with tab_calendar:
     )
     st.markdown(f'<div style="margin-top:10px;">{legend_html}</div>', unsafe_allow_html=True)
 
-    clicked_id = (result or {}).get("eventClick", {}).get("event", {}).get("id")
-    task = task_by_id.get(clicked_id)
-    if task:
-        st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
-        st.markdown(ui.section_label("Task detail"), unsafe_allow_html=True)
+    @st.dialog("Task detail")
+    def _task_dialog(task, emp):
         status_color = status_colors.get(task.status.value, ui.MUTED)
         st.markdown(ui.task_detail_card(
             task.title,
-            emp_names.get(task.employee_id, "Unknown"),
+            emp.name if emp else "Unknown",
             task.status.value.replace("_", " ").upper(),
             status_color,
             task.date.strftime("%A, %b %d %Y"),
             task.hours,
         ), unsafe_allow_html=True)
+        if emp:
+            st.caption(f"{emp.role} · {emp.sprint_name} · engaged since {emp.engagement_start}")
 
-# ---- TRUST LEDGER TAB ----
-with tab_trust:
-    st.markdown(ui.section_label("How the categorization layer routed every event — nothing is deleted, only routed"), unsafe_allow_html=True)
+            nearby = [
+                e for e in store.events_for_employee(emp.id)
+                if abs((e.timestamp.date() - task.date).days) <= 3
+            ]
+            if nearby:
+                st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
+                st.markdown(ui.section_label("Check-ins around this date"), unsafe_allow_html=True)
+                for ev in nearby[:3]:
+                    st.markdown(ui.event_card(ev, emp.name), unsafe_allow_html=True)
 
-    tiers = store.tier_breakdown()
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(ui.colored_metric("Standard visibility", str(tiers.get("standard", 0)), ui.TRUST), unsafe_allow_html=True)
-    with c2:
-        st.markdown(ui.colored_metric("Restricted / archived", str(tiers.get("restricted", 0)), ui.AMBER), unsafe_allow_html=True)
-    with c3:
-        st.markdown(ui.colored_metric("Escalated (surfaced faster)", str(tiers.get("escalate", 0)), ui.ALERT), unsafe_allow_html=True)
+        if st.button("Close", key="close_task_dialog", use_container_width=True):
+            st.rerun()
 
-    st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
-    st.markdown(ui.section_label("Restricted & escalated events across the whole portfolio"), unsafe_allow_html=True)
-    emp_names_all = {e.id: e.name for e in store.employees.values()}
-    flagged = [e for e in store.events if e.tier != VisibilityTier.STANDARD]
-    for ev in flagged:
-        st.markdown(ui.event_card(ev, emp_names_all.get(ev.employee_id, "Unknown")), unsafe_allow_html=True)
-        if ev.matches:
-            reasons = ", ".join(f"`{m.category}`" for m in ev.matches)
-            st.caption(f"Routed because: {reasons}")
+    # The component keeps returning the last eventClick payload on every
+    # rerun (even ones triggered by unrelated widgets elsewhere on the
+    # page) until the user interacts with the calendar again. Mark it
+    # dismissed the moment we open it (rather than only when the Close
+    # button is pressed) so a rerun from something unrelated — or the
+    # dialog's own native X / click-outside close — doesn't pop it right
+    # back open.
+    clicked_id = (result or {}).get("eventClick", {}).get("event", {}).get("id")
+    if clicked_id and clicked_id != st.session_state.dismissed_task_id:
+        task = task_by_id.get(clicked_id)
+        if task:
+            st.session_state.dismissed_task_id = clicked_id
+            emp_by_id = {e.id: e for e in employees}
+            _task_dialog(task, emp_by_id.get(task.employee_id))
 
 # ----------------------------------------------------------------------------
 # Floating PM agent chat — popup, scoped to the currently viewed client

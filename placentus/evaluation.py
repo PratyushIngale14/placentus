@@ -30,7 +30,7 @@ def _tokenize(text: str) -> set[str]:
 
 def _split_claims(answer: str) -> list[str]:
     """Naive sentence split — good enough for short agent answers."""
-    parts = re.split(r"(?<=[.!?])\s+|\n+[-*•]\s*", answer.strip())
+    parts = re.split(r"(?<=[.!?])\s+|\n+[-*•]\s*|\n+\d+[.)]\s*", answer.strip())
     return [p.strip(" -*•") for p in parts if len(p.strip(" -*•")) > 3]
 
 
@@ -49,6 +49,22 @@ _MIN_CLAIM_TOKENS = 4
 # required.
 _OVERLAP_THRESHOLD = 0.22
 
+# Framing ("Here is a step-by-step guide...") and prescriptive/advisory
+# sentences ("Escalate this to your manager.", "Consider following up
+# tomorrow.") aren't factual assertions about the account — they're
+# scaffolding or recommendations. Scoring them against the corpus
+# produces false "ungrounded" hits for reasons that have nothing to do
+# with hallucination, since a recommendation is not something the event
+# log could ever "contain" verbatim.
+_NON_FACTUAL_PREFIX = re.compile(
+    r"^(here'?s?\b|to summarize|in summary|step[- ]by[- ]step|based on (the )?context|"
+    r"recommended action|in conclusion|to recap|overall,|"
+    r"consider\b|recommend(ed|ing)?\b|try\b|escalate\b|document\b|set (a|up)\b|"
+    r"follow[- ]up\b|make sure\b|ensure\b|reach out\b|schedule\b|flag\b|raise (it|this)\b|"
+    r"once resolved\b|if\b|next,?\b|then,?\b|finally,?\b|first,?\b)",
+    re.IGNORECASE,
+)
+
 
 def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> AgentEvaluationReport:
     """
@@ -64,6 +80,8 @@ def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> Agen
     checks: list[GroundingCheck] = []
 
     for claim in claims:
+        if _NON_FACTUAL_PREFIX.match(claim.strip()):
+            continue
         claim_tokens = _tokenize(claim)
         if len(claim_tokens) < _MIN_CLAIM_TOKENS:
             continue

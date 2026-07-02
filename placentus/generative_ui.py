@@ -74,14 +74,16 @@ def risk_pill(risk: RiskLevel) -> str:
     color, bg = RISK_COLORS[risk]
     label = risk.value.replace("_", " ").upper()
     return _clean(f"""<span style="background:{bg};color:{color};font-family:'JetBrains Mono',monospace;
-        font-size:10px;letter-spacing:0.1em;padding:3px 9px;border-radius:20px;
+        font-size:10px;letter-spacing:0.1em;padding:3px 9px;border-radius:20px;white-space:nowrap;
+        flex-shrink:0;display:inline-block;line-height:1.6;
         border:1px solid {color}40;">{label}</span>""")
 
 
 def tier_pill(tier: VisibilityTier) -> str:
     color, bg = TIER_COLORS[tier]
     return _clean(f"""<span style="background:{bg};color:{color};font-family:'JetBrains Mono',monospace;
-        font-size:9.5px;letter-spacing:0.1em;padding:2px 8px;border-radius:20px;
+        font-size:9.5px;letter-spacing:0.1em;padding:2px 8px;border-radius:20px;white-space:nowrap;
+        flex-shrink:0;display:inline-block;line-height:1.6;
         border:1px solid {color}40;">{tier.value.upper()}</span>""")
 
 
@@ -101,14 +103,20 @@ def colored_metric(label: str, value: str, color: str = INK) -> str:
 
 
 def chat_fab_icon_data_uri() -> str:
-    """Chat-bubble SVG for the floating PM Agent launcher, as a CSS data URI."""
+    """Chat-bubble SVG for the floating PM Agent launcher, as a CSS data URI.
+
+    Deliberately a plain circle + three dots, not a speech bubble with a
+    tail — a tail notch makes the drawn shape's visual weight lopsided
+    even when the SVG box itself is centered in its button, which reads
+    as a misaligned icon. A radially symmetric mark centers cleanly no
+    matter how the surrounding button centers its content.
+    """
     svg = (
-        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' "
-        "stroke='#0A0E14' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>"
-        "<path d='M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z'/>"
-        "<circle cx='8' cy='10.5' r='1.1' fill='#0A0E14' stroke='none'/>"
-        "<circle cx='12' cy='10.5' r='1.1' fill='#0A0E14' stroke='none'/>"
-        "<circle cx='16' cy='10.5' r='1.1' fill='#0A0E14' stroke='none'/>"
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>"
+        "<circle cx='12' cy='12' r='10' fill='none' stroke='#0A0E14' stroke-width='2'/>"
+        "<circle cx='8' cy='12' r='1.4' fill='#0A0E14'/>"
+        "<circle cx='12' cy='12' r='1.4' fill='#0A0E14'/>"
+        "<circle cx='16' cy='12' r='1.4' fill='#0A0E14'/>"
         "</svg>"
     )
     return "data:image/svg+xml," + urllib.parse.quote(svg)
@@ -121,9 +129,10 @@ def client_card(client_name: str, industry: str, health: ClientHealthSummary, is
     <div style="background:{PANEL};border:{border};border-radius:12px;padding:16px 18px;
                 margin-bottom:10px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:{color};"></div>
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div>
-                <div style="font-family:'Fraunces',serif;font-size:17px;color:{INK};font-weight:600;">{client_name}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div style="min-width:0;">
+                <div style="font-family:'Fraunces',serif;font-size:16px;color:{INK};font-weight:600;
+                            line-height:1.3;word-break:keep-all;overflow-wrap:normal;">{client_name}</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{MUTED};
                             letter-spacing:0.08em;margin-top:2px;">{industry.upper()}</div>
             </div>
