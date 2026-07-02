@@ -8,6 +8,9 @@ account health instead of a product launch.
 
 from __future__ import annotations
 
+import base64
+import os
+
 import streamlit as st
 from streamlit_calendar import calendar as st_calendar
 
@@ -16,9 +19,14 @@ from placentus.evaluation import evaluate_answer
 from placentus.schemas import RiskLevel, SourceType, VisibilityTier
 from placentus import generative_ui as ui
 
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "assets", "logo.svg")
+with open(LOGO_PATH) as _f:
+    LOGO_SVG = _f.read()
+LOGO_DATA_URI = "data:image/svg+xml;base64," + base64.b64encode(LOGO_SVG.encode()).decode()
+
 st.set_page_config(
     page_title="Placentus — Engagement Intelligence",
-    page_icon=None,
+    page_icon=LOGO_DATA_URI,
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -49,15 +57,20 @@ p, div, span, label {{
     color: {ui.INK};
 }}
 .stTabs [data-baseweb="tab-list"] {{
-    gap: 4px;
+    gap: 8px;
 }}
 .stTabs [data-baseweb="tab"] {{
     background-color: {ui.PANEL};
     border-radius: 8px 8px 0 0;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 0.08em;
     color: {ui.MUTED};
+    height: auto;
+    padding: 12px 22px;
+}}
+.stTabs [data-baseweb="tab"] p {{
+    font-size: 13px;
 }}
 .stTabs [aria-selected="true"] {{
     color: {ui.TRUST} !important;
@@ -84,24 +97,28 @@ div[data-testid="stMetric"] {{
 .st-key-chat_fab button {{
     width: 60px !important;
     height: 60px !important;
+    min-width: 60px !important;
     border-radius: 50% !important;
     background: {ui.TRUST} !important;
     border: none !important;
     box-shadow: 0 6px 20px rgba(0,0,0,0.45);
     padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }}
-.st-key-chat_fab button p {{
+.st-key-chat_fab button div[data-testid="stMarkdownContainer"] {{
     display: none;
 }}
 .st-key-chat_fab button::before {{
     content: "";
-    display: block;
     width: 26px;
     height: 26px;
-    margin: 0 auto;
+    flex: none;
     background-image: url("{ui.chat_fab_icon_data_uri()}");
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }}
 
 /* Floating PM Agent chat popup */
@@ -152,13 +169,16 @@ store = load_store(st.session_state.api_key or None)
 # ----------------------------------------------------------------------------
 
 st.markdown(f"""
-<div style="display:flex;align-items:baseline;gap:14px;">
-    <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};">Placentus</span>
-    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
-        ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
-    </span>
+<div style="display:flex;align-items:center;gap:14px;">
+    <img src="{LOGO_DATA_URI}" width="44" height="44" style="border-radius:10px;" />
+    <div style="display:flex;flex-direction:column;gap:3px;">
+        <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};line-height:1.1;">Placentus</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
+            ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
+        </span>
+    </div>
 </div>
-<div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:4px;">
+<div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:8px;">
     Visibility into embedded consultants — sourced entirely from what they choose to share, never from client systems.
 </div>
 """, unsafe_allow_html=True)
@@ -206,10 +226,23 @@ tab_overview, tab_employees, tab_calendar, tab_trust = st.tabs(
 # ---- OVERVIEW TAB ----
 with tab_overview:
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Account Health", client_health.risk_level.value.replace("_", " ").upper())
-    c2.metric("Fellows on account", client_health.employee_count)
-    c3.metric("At risk", client_health.at_risk_count)
-    c4.metric("Open escalations", client_health.escalation_count)
+    with c1:
+        st.markdown(ui.colored_metric(
+            "Account Health", client_health.risk_level.value.replace("_", " ").upper(),
+            ui.risk_color(client_health.risk_level),
+        ), unsafe_allow_html=True)
+    with c2:
+        st.markdown(ui.colored_metric("Fellows on account", str(client_health.employee_count)), unsafe_allow_html=True)
+    with c3:
+        st.markdown(ui.colored_metric(
+            "At risk", str(client_health.at_risk_count),
+            ui.AMBER if client_health.at_risk_count else ui.MUTED,
+        ), unsafe_allow_html=True)
+    with c4:
+        st.markdown(ui.colored_metric(
+            "Open escalations", str(client_health.escalation_count),
+            ui.ALERT if client_health.escalation_count else ui.MUTED,
+        ), unsafe_allow_html=True)
 
     st.markdown(ui.section_label(f"{client.name} · {client.industry} · Account Manager: {client.account_manager}"), unsafe_allow_html=True)
 
@@ -255,31 +288,107 @@ with tab_calendar:
 
     emp_names = {e.id: e.name for e in employees}
     tasks = store.tasks_for_client(client.id)
+    task_by_id = {t.id: t for t in tasks}
     cal_events = [
         {
+            "id": t.id,
             "title": f"{emp_names.get(t.employee_id, '')[:1]}. {t.title}",
             "start": t.date.isoformat(),
             "end": t.date.isoformat(),
-            "color": status_colors.get(t.status.value, ui.MUTED),
+            "backgroundColor": f"{status_colors.get(t.status.value, ui.MUTED)}1F",
+            "borderColor": status_colors.get(t.status.value, ui.MUTED),
+            "textColor": status_colors.get(t.status.value, ui.MUTED),
         }
         for t in tasks
     ]
 
-    st_calendar(
+    result = st_calendar(
         events=cal_events,
         options={
             "initialView": initial_view,
             "initialDate": "2026-06-01",
             "height": 620,
             "headerToolbar": {"left": "prev,next today", "center": "title", "right": ""},
+            "eventDisplay": "block",
+            "dayMaxEvents": 3,
         },
         custom_css=f"""
-        .fc {{ background-color: {ui.PANEL}; border-radius: 10px; padding: 8px; }}
-        .fc-toolbar-title {{ color: {ui.INK}; font-family: 'Fraunces', serif; }}
-        .fc-col-header-cell {{ background-color: {ui.PANEL_RAISED}; color: {ui.MUTED}; }}
-        .fc-daygrid-day, .fc-timegrid-slot {{ background-color: {ui.VOID}; }}
-        .fc-daygrid-day-number, .fc-timegrid-slot-label {{ color: {ui.MUTED}; }}
-        .fc-button {{ background-color: {ui.PANEL_RAISED} !important; border: 1px solid {ui.BORDER} !important; }}
+        .fc {{
+            background-color: {ui.PANEL};
+            border: 1px solid {ui.BORDER};
+            border-radius: 14px;
+            padding: 18px;
+            font-family: 'Geist', sans-serif;
+        }}
+        .fc .fc-toolbar-title {{
+            color: {ui.INK};
+            font-family: 'Fraunces', serif;
+            font-size: 19px;
+        }}
+        .fc .fc-scrollgrid {{
+            border-color: {ui.BORDER} !important;
+            border-radius: 10px;
+            overflow: hidden;
+        }}
+        .fc-theme-standard td, .fc-theme-standard th {{
+            border-color: {ui.BORDER} !important;
+        }}
+        .fc .fc-col-header-cell {{ background-color: transparent; }}
+        .fc .fc-col-header-cell-cushion {{
+            color: {ui.MUTED};
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 10px 4px;
+        }}
+        .fc .fc-daygrid-day, .fc .fc-timegrid-slot {{ background-color: transparent; }}
+        .fc .fc-day-today {{ background-color: {ui.TRUST}0D !important; }}
+        .fc .fc-daygrid-day-number, .fc .fc-timegrid-slot-label-cushion {{
+            color: {ui.MUTED};
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-decoration: none;
+            padding: 6px;
+        }}
+        .fc .fc-day-today .fc-daygrid-day-number {{ color: {ui.TRUST}; font-weight: 600; }}
+        .fc .fc-event {{
+            border-width: 0 0 0 3px !important;
+            border-style: solid !important;
+            border-radius: 4px !important;
+            padding: 2px 6px !important;
+            margin: 2px 4px !important;
+            font-family: 'Geist', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: none !important;
+        }}
+        .fc .fc-event:hover {{ filter: brightness(1.3); }}
+        .fc .fc-daygrid-more-link {{
+            color: {ui.MUTED};
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+        }}
+        .fc .fc-button {{
+            background-color: {ui.PANEL_RAISED} !important;
+            border: 1px solid {ui.BORDER} !important;
+            color: {ui.INK} !important;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            box-shadow: none !important;
+            border-radius: 8px !important;
+            padding: 6px 14px !important;
+        }}
+        .fc .fc-button:hover {{ background-color: {ui.BORDER} !important; }}
+        .fc .fc-button-primary:not(:disabled).fc-button-active {{
+            background-color: {ui.TRUST_DIM} !important;
+            color: {ui.TRUST} !important;
+            border-color: {ui.TRUST}55 !important;
+        }}
         """,
         key=f"cal_{client.id}_{view_mode}",
     )
@@ -290,15 +399,33 @@ with tab_calendar:
     )
     st.markdown(f'<div style="margin-top:10px;">{legend_html}</div>', unsafe_allow_html=True)
 
+    clicked_id = (result or {}).get("eventClick", {}).get("event", {}).get("id")
+    task = task_by_id.get(clicked_id)
+    if task:
+        st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
+        st.markdown(ui.section_label("Task detail"), unsafe_allow_html=True)
+        status_color = status_colors.get(task.status.value, ui.MUTED)
+        st.markdown(ui.task_detail_card(
+            task.title,
+            emp_names.get(task.employee_id, "Unknown"),
+            task.status.value.replace("_", " ").upper(),
+            status_color,
+            task.date.strftime("%A, %b %d %Y"),
+            task.hours,
+        ), unsafe_allow_html=True)
+
 # ---- TRUST LEDGER TAB ----
 with tab_trust:
     st.markdown(ui.section_label("How the categorization layer routed every event — nothing is deleted, only routed"), unsafe_allow_html=True)
 
     tiers = store.tier_breakdown()
     c1, c2, c3 = st.columns(3)
-    c1.metric("Standard visibility", tiers.get("standard", 0))
-    c2.metric("Restricted / archived", tiers.get("restricted", 0))
-    c3.metric("Escalated (surfaced faster)", tiers.get("escalate", 0))
+    with c1:
+        st.markdown(ui.colored_metric("Standard visibility", str(tiers.get("standard", 0)), ui.TRUST), unsafe_allow_html=True)
+    with c2:
+        st.markdown(ui.colored_metric("Restricted / archived", str(tiers.get("restricted", 0)), ui.AMBER), unsafe_allow_html=True)
+    with c3:
+        st.markdown(ui.colored_metric("Escalated (surfaced faster)", str(tiers.get("escalate", 0)), ui.ALERT), unsafe_allow_html=True)
 
     st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
     st.markdown(ui.section_label("Restricted & escalated events across the whole portfolio"), unsafe_allow_html=True)
@@ -392,11 +519,23 @@ if st.session_state.chat_open:
                         "the answer isn't in the context, say so plainly rather than guessing.\n\n"
                         f"CONTEXT EVENTS ({client.name} only):\n{context_text}"
                     )
+                    # Include recent turns so follow-ups like "what should I
+                    # tackle first?" have something to refer back to — a
+                    # single isolated message can't answer that on its own.
+                    # chat_history already ends with this turn's user prompt
+                    # (appended above); take a suffix and drop a leading
+                    # assistant turn so it still starts on a user message,
+                    # as the API requires.
+                    recent_turns = st.session_state.chat_history[-9:]
+                    if recent_turns and recent_turns[0][0] != "user":
+                        recent_turns = recent_turns[1:]
+                    turn_messages = [{"role": role, "content": text} for role, text, _ in recent_turns]
+
                     resp = client_sdk.messages.create(
                         model="claude-sonnet-4-6",
                         max_tokens=500,
                         system=system,
-                        messages=[{"role": "user", "content": prompt}],
+                        messages=turn_messages,
                     )
                     answer = "".join(b.text for b in resp.content if hasattr(b, "text"))
                     evalr = evaluate_answer(answer, client_events)

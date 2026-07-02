@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 from .categorization import categorize
@@ -56,9 +57,7 @@ class PlacentusStore:
         self.employees = {e["id"]: Employee(**e) for e in raw["employees"]}
         self.calendar_tasks = [CalendarTask(**t) for t in raw["calendar_tasks"]]
 
-        events: list[CategorizedEvent] = []
-
-        for chk in raw["checkins"]:
+        def _process_checkin(chk: dict) -> CategorizedEvent:
             ts = datetime.fromisoformat(chk["timestamp"])
             combined = (
                 f"Work update: {chk['q1_work']} "
@@ -77,19 +76,29 @@ class PlacentusStore:
             floor = _SUSTAINABILITY_RISK[SustainabilityLevel(chk["q3_sustainability"])]
             if _RISK_ORDER.index(floor) > _RISK_ORDER.index(ev.risk_level):
                 ev.risk_level = floor
-            events.append(ev)
+            return ev
 
-        for note in raw["pm_notes"]:
+        def _process_note(note: dict) -> CategorizedEvent:
             ts = datetime.fromisoformat(note["timestamp"])
-            ev = categorize(
+            return categorize(
                 raw_text=f"PM note ({note['pm_name']}): {note['note']} [Engagement signal: {note['engagement_signal']}]",
                 employee_id=note["employee_id"],
                 source=SourceType.PM_NOTE,
                 timestamp=ts,
                 api_key=self.api_key,
             )
-            events.append(ev)
 
+        # Each categorize() call makes its own network round-trip to Claude
+        # for the optional semantic pass when an API key is set. Running
+        # them sequentially made entering a key stall the whole dashboard
+        # for as long as it took to make one request per check-in/note.
+        # These calls are independent (no shared state), so a thread pool
+        # is safe and turns that into one round-trip's worth of wall time.
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            checkin_events = list(pool.map(_process_checkin, raw["checkins"]))
+            note_events = list(pool.map(_process_note, raw["pm_notes"]))
+
+        events = checkin_events + note_events
         events.sort(key=lambda e: e.timestamp, reverse=True)
         self.events = events
 

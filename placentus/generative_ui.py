@@ -85,6 +85,21 @@ def tier_pill(tier: VisibilityTier) -> str:
         border:1px solid {color}40;">{tier.value.upper()}</span>""")
 
 
+def risk_color(risk: RiskLevel) -> str:
+    """The same color used for a risk level's pill, for reuse anywhere else that value appears."""
+    return RISK_COLORS[risk][0]
+
+
+def colored_metric(label: str, value: str, color: str = INK) -> str:
+    """A metric tile whose value is colored — st.metric always renders in plain ink,
+    which reads as inconsistent next to the colored risk/tier pills used everywhere else."""
+    return _clean(f"""
+    <div style="background:{PANEL};border:1px solid {BORDER};border-radius:10px;padding:12px 16px;">
+        <div style="font-family:'Geist',sans-serif;font-size:13px;color:{MUTED};">{label}</div>
+        <div style="font-family:'Geist',sans-serif;font-size:28px;font-weight:600;color:{color};margin-top:4px;">{value}</div>
+    </div>""")
+
+
 def chat_fab_icon_data_uri() -> str:
     """Chat-bubble SVG for the floating PM Agent launcher, as a CSS data URI."""
     svg = (
@@ -186,6 +201,26 @@ def event_card(event: CategorizedEvent, employee_name: str) -> str:
         {matches_html}
         <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:{MUTED};margin-top:8px;">
             {event.timestamp.strftime('%b %d · %H:%M')} · {event.source.value.replace('_',' ').upper()}
+        </div>
+    </div>""")
+
+
+def task_detail_card(title: str, employee_name: str, status_label: str, status_color: str, date_str: str, hours: float) -> str:
+    """Detail shown when a calendar task is clicked."""
+    return _clean(f"""
+    <div style="background:{PANEL};border:1px solid {BORDER};border-left:3px solid {status_color};
+                border-radius:8px;padding:14px 16px;margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'Geist',sans-serif;font-size:14px;color:{INK};font-weight:600;">{title}</span>
+            <span style="background:{status_color}22;color:{status_color};font-family:'JetBrains Mono',monospace;
+                font-size:9.5px;letter-spacing:0.1em;padding:2px 8px;border-radius:20px;
+                border:1px solid {status_color}40;">{status_label}</span>
+        </div>
+        <div style="font-family:'Geist',sans-serif;font-size:12.5px;color:{MUTED};margin-top:6px;">
+            {employee_name} · {hours:g}h
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:{MUTED};margin-top:8px;">
+            {date_str}
         </div>
     </div>""")
 

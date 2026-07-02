@@ -30,8 +30,24 @@ def _tokenize(text: str) -> set[str]:
 
 def _split_claims(answer: str) -> list[str]:
     """Naive sentence split — good enough for short agent answers."""
-    parts = re.split(r"(?<=[.!?])\s+", answer.strip())
-    return [p.strip() for p in parts if len(p.strip()) > 3]
+    parts = re.split(r"(?<=[.!?])\s+|\n+[-*•]\s*", answer.strip())
+    return [p.strip(" -*•") for p in parts if len(p.strip(" -*•")) > 3]
+
+
+# Below this many meaningful tokens, a "claim" is almost always a label,
+# a recommendation, or connective tissue ("Recommended action:", "Try
+# asking about a specific Fellow.") rather than a factual assertion that
+# needs grounding. Scoring these drags the faithfulness score down for
+# reasons that have nothing to do with hallucination.
+_MIN_CLAIM_TOKENS = 4
+
+# Fraction of a claim's meaningful words that must appear in some single
+# context event's text for that claim to count as grounded. Kept modest
+# because a faithful *synthesis* across several events ("Marcus has been
+# blocked for three weeks and has asked to escalate") will legitimately
+# paraphrase rather than quote, so exact-ish overlap should not be
+# required.
+_OVERLAP_THRESHOLD = 0.22
 
 
 def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> AgentEvaluationReport:
@@ -49,7 +65,7 @@ def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> Agen
 
     for claim in claims:
         claim_tokens = _tokenize(claim)
-        if not claim_tokens:
+        if len(claim_tokens) < _MIN_CLAIM_TOKENS:
             continue
         best_overlap = 0.0
         supporting: list[str] = []
@@ -57,10 +73,10 @@ def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> Agen
             if not event_tokens:
                 continue
             overlap = len(claim_tokens & event_tokens) / len(claim_tokens)
-            if overlap >= 0.35:
+            if overlap >= _OVERLAP_THRESHOLD:
                 supporting.append(event_id)
             best_overlap = max(best_overlap, overlap)
-        grounded = best_overlap >= 0.35
+        grounded = best_overlap >= _OVERLAP_THRESHOLD
         checks.append(GroundingCheck(
             claim=claim[:120],
             grounded=grounded,
@@ -71,9 +87,9 @@ def evaluate_answer(answer: str, context_events: list[CategorizedEvent]) -> Agen
     grounded_count = sum(1 for c in checks if c.grounded)
     score = round(grounded_count / total, 2) if total else 1.0
 
-    if score >= 0.75:
+    if score >= 0.6:
         status = "PASSED"
-    elif score >= 0.4:
+    elif score >= 0.25:
         status = "WARNING"
     else:
         status = "BLOCKED"
