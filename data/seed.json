@@ -1,0 +1,1468 @@
+{
+  "clients": [
+    {
+      "id": "client-meridian",
+      "name": "Meridian Health Systems",
+      "industry": "Healthcare",
+      "engagement_start": "2026-02-01",
+      "contract_value_band": "$180K-$260K/yr",
+      "account_manager": "Sarah Chen"
+    },
+    {
+      "id": "client-vantage",
+      "name": "Vantage Logistics",
+      "industry": "Logistics",
+      "engagement_start": "2026-03-15",
+      "contract_value_band": "$120K-$180K/yr",
+      "account_manager": "James Okafor"
+    },
+    {
+      "id": "client-northbridge",
+      "name": "Northbridge Financial",
+      "industry": "Financial Services",
+      "engagement_start": "2026-01-10",
+      "contract_value_band": "$250K-$400K/yr",
+      "account_manager": "Rachel Torres"
+    },
+    {
+      "id": "client-cascade",
+      "name": "Cascade Retail Group",
+      "industry": "Retail",
+      "engagement_start": "2026-04-01",
+      "contract_value_band": "$90K-$150K/yr",
+      "account_manager": "Diana Frost"
+    },
+    {
+      "id": "client-ionis",
+      "name": "Ionis Biotech",
+      "industry": "Biotechnology",
+      "engagement_start": "2026-02-20",
+      "contract_value_band": "$200K-$320K/yr",
+      "account_manager": "Carmen Vela"
+    }
+  ],
+  "employees": [
+    {
+      "id": "emp-aditi",
+      "name": "Aditi Rao",
+      "role": "Data Analyst",
+      "client_id": "client-meridian",
+      "sprint_name": "Claims Automation Q3",
+      "engagement_start": "2026-02-03",
+      "pm_name": "Sarah Chen"
+    },
+    {
+      "id": "emp-marcus",
+      "name": "Marcus Webb",
+      "role": "Software Engineer",
+      "client_id": "client-meridian",
+      "sprint_name": "Patient Portal Revamp",
+      "engagement_start": "2026-02-10",
+      "pm_name": "Sarah Chen"
+    },
+    {
+      "id": "emp-sam",
+      "name": "Sam Rivera",
+      "role": "Business Analyst",
+      "client_id": "client-vantage",
+      "sprint_name": "Fleet Optimization",
+      "engagement_start": "2026-03-18",
+      "pm_name": "James Okafor"
+    },
+    {
+      "id": "emp-priya",
+      "name": "Priya Nair",
+      "role": "Data Engineer",
+      "client_id": "client-vantage",
+      "sprint_name": "Warehouse ETL Pipeline",
+      "engagement_start": "2026-03-20",
+      "pm_name": "James Okafor"
+    },
+    {
+      "id": "emp-kevin",
+      "name": "Kevin Park",
+      "role": "Financial Analyst",
+      "client_id": "client-northbridge",
+      "sprint_name": "Risk Model v2",
+      "engagement_start": "2026-01-15",
+      "pm_name": "Rachel Torres"
+    },
+    {
+      "id": "emp-lily",
+      "name": "Lily Tan",
+      "role": "Software Engineer",
+      "client_id": "client-northbridge",
+      "sprint_name": "Compliance Dashboard",
+      "engagement_start": "2026-01-20",
+      "pm_name": "Rachel Torres"
+    },
+    {
+      "id": "emp-neil2",
+      "name": "Neil Sharma",
+      "role": "Backend Engineer",
+      "client_id": "client-northbridge",
+      "sprint_name": "Payments Reconciliation",
+      "engagement_start": "2026-02-01",
+      "pm_name": "Rachel Torres"
+    },
+    {
+      "id": "emp-dev",
+      "name": "Dev Patel",
+      "role": "Data Scientist",
+      "client_id": "client-cascade",
+      "sprint_name": "Demand Forecasting",
+      "engagement_start": "2026-04-05",
+      "pm_name": "Diana Frost"
+    },
+    {
+      "id": "emp-ananya",
+      "name": "Ananya Rao",
+      "role": "Product Analyst",
+      "client_id": "client-cascade",
+      "sprint_name": "Loyalty Program Redesign",
+      "engagement_start": "2026-04-08",
+      "pm_name": "Diana Frost"
+    },
+    {
+      "id": "emp-tom",
+      "name": "Tom Bradley",
+      "role": "ML Engineer",
+      "client_id": "client-ionis",
+      "sprint_name": "Trial Data Pipeline",
+      "engagement_start": "2026-02-22",
+      "pm_name": "Carmen Vela"
+    },
+    {
+      "id": "emp-neil",
+      "name": "Neil Fernandes",
+      "role": "Data Analyst",
+      "client_id": "client-ionis",
+      "sprint_name": "Lab Results Integration",
+      "engagement_start": "2026-02-25",
+      "pm_name": "Carmen Vela"
+    },
+    {
+      "id": "emp-mia",
+      "name": "Mia Johnson",
+      "role": "QA Engineer",
+      "client_id": "client-ionis",
+      "sprint_name": "Trial Data Pipeline",
+      "engagement_start": "2026-03-01",
+      "pm_name": "Carmen Vela"
+    }
+  ],
+  "checkins": [
+    {
+      "id": "chk-6f79d729",
+      "employee_id": "emp-aditi",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Finished the claims dedup logic and started on the reconciliation report. No blockers.",
+      "q2_relationship": "Good week with the client team, clear priorities from the standup.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-db14dd1b",
+      "employee_id": "emp-aditi",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Shipped the reconciliation report, now validating against last quarter's numbers.",
+      "q2_relationship": "Client PM gave positive feedback on the dashboard draft.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-b6c09847",
+      "employee_id": "emp-aditi",
+      "timestamp": "2026-06-19T17:00:00",
+      "q1_work": "Started the automated alerts feature for claim anomalies.",
+      "q2_relationship": "Smooth week, client included me in the planning call this time.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-9623d8c3",
+      "employee_id": "emp-marcus",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Working on the patient portal login flow. Still waiting on the client to grant Snowflake read access.",
+      "q2_relationship": "Fine otherwise, just stuck on the access request.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-92dcd265",
+      "employee_id": "emp-marcus",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Same as last week \u2014 still waiting on Snowflake access from the client's IT team, can't move the data layer forward.",
+      "q2_relationship": "Raised it again in standup, they said they'd look into it.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-6e678b9a",
+      "employee_id": "emp-marcus",
+      "timestamp": "2026-06-19T17:00:00",
+      "q1_work": "Third week now waiting on Snowflake access. I've built everything I can around it but the core task is fully blocked.",
+      "q2_relationship": "Starting to feel like this isn't a priority for them even though it's blocking my whole sprint.",
+      "q3_sustainability": "Stressful",
+      "q4_escalation": "Could someone from ProMazo help escalate this access request? I don't think I can push harder from my side."
+    },
+    {
+      "id": "chk-641ecb84",
+      "employee_id": "emp-sam",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Mapped the current fleet routing logic, starting the optimization model next.",
+      "q2_relationship": "Good relationship with the client manager, very responsive.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-3140711e",
+      "employee_id": "emp-sam",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Model is showing a 12% efficiency gain in early tests. If you need to reach the client lead directly his cell is 214-555-0148, easier than email.",
+      "q2_relationship": "No concerns.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-3ada45fc",
+      "employee_id": "emp-sam",
+      "timestamp": "2026-06-19T17:00:00",
+      "q1_work": "Presented the model results, client wants to expand scope to include the Texas warehouses too.",
+      "q2_relationship": "Feels like more work than originally scoped but I'm excited about it.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-6eeab8bc",
+      "employee_id": "emp-priya",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "ETL pipeline is live for the first three warehouses, backfilling historical data now.",
+      "q2_relationship": "Standups are efficient, client engineering lead is sharp and clear.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-bd0be4bb",
+      "employee_id": "emp-priya",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Backfill finished, now optimizing query performance on the warehouse layer.",
+      "q2_relationship": "All good.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-a57418df",
+      "employee_id": "emp-kevin",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Refactored the risk scoring model, validation metrics look strong.",
+      "q2_relationship": "Fine, standard week.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-fc91e6db",
+      "employee_id": "emp-kevin",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Client shared their unreleased Q3 revenue numbers to benchmark the risk model against \u2014 should probably not be in a status report but wanted it logged somewhere.",
+      "q2_relationship": "Otherwise a normal week.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-456fca57",
+      "employee_id": "emp-kevin",
+      "timestamp": "2026-06-19T17:00:00",
+      "q1_work": "Model is in final review with the client's compliance team.",
+      "q2_relationship": "Positive, they said the model is more thorough than their last vendor's.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-59b05677",
+      "employee_id": "emp-lily",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Compliance dashboard front-end is 80% done, waiting on final design sign-off.",
+      "q2_relationship": "Client design lead has been slow to respond this week.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-5608ea3b",
+      "employee_id": "emp-lily",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "My client manager raised his voice at me in front of the whole team on a call yesterday over a deadline that was never actually confirmed in writing. It was humiliating and I still feel uncomfortable about it.",
+      "q2_relationship": "I don't know how to bring this up without it affecting the relationship.",
+      "q3_sustainability": "Stressful",
+      "q4_escalation": "Yes \u2014 I would like someone from ProMazo to reach out to me about this, I don't want to handle it alone."
+    },
+    {
+      "id": "chk-26f2efc2",
+      "employee_id": "emp-neil2",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Payments reconciliation module passing all test cases now.",
+      "q2_relationship": "Good week, no issues.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-21819f4c",
+      "employee_id": "emp-neil2",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Client asked me to also take over a completely separate reporting project that has nothing to do with my original scope \u2014 feels like scope creep, wasn't hired for this.",
+      "q2_relationship": "Not sure if I should just say yes to keep things smooth.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-aea3157b",
+      "employee_id": "emp-dev",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Forecasting model backtested against 2 years of sales data, accuracy within target range.",
+      "q2_relationship": "Great collaboration with the client's merchandising team.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-ff3cf293",
+      "employee_id": "emp-dev",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Deployed the forecasting model to staging, client is reviewing outputs this week.",
+      "q2_relationship": "No concerns.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-2cd9428d",
+      "employee_id": "emp-ananya",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Loyalty program tiering logic finalized, moving to the rewards calculation engine.",
+      "q2_relationship": "Client stakeholders are engaged and give fast feedback.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-4ad7204c",
+      "employee_id": "emp-ananya",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Rewards engine on track, minor delay from a shared dependency on the client's side.",
+      "q2_relationship": "Fine, not a big deal.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-03a8997f",
+      "employee_id": "emp-tom",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Trial data pipeline ingesting from 2 of 4 sites, on schedule.",
+      "q2_relationship": "Client PI is demanding but fair.",
+      "q3_sustainability": "A bit stretched",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-c7ad5c6d",
+      "employee_id": "emp-tom",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Now ingesting from all 4 sites, but the QA cycle is taking longer than planned and eating into my weekends.",
+      "q2_relationship": "Same as last week, high pressure but manageable so far.",
+      "q3_sustainability": "Stressful",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-4d58f043",
+      "employee_id": "emp-tom",
+      "timestamp": "2026-06-19T17:00:00",
+      "q1_work": "Pipeline is stable but I've worked through the last two weekends to keep up with the QA backlog and I'm running on fumes.",
+      "q2_relationship": "Nobody on the client side seems aware of how much overtime this has actually taken.",
+      "q3_sustainability": "Burning out",
+      "q4_escalation": "I'd like to talk to my ProMazo manager about workload \u2014 I don't think this pace is sustainable long term."
+    },
+    {
+      "id": "chk-2cbd2869",
+      "employee_id": "emp-neil",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Lab results integration mapped to the new schema, testing this week.",
+      "q2_relationship": "Smooth week.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-c6683aab",
+      "employee_id": "emp-neil",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Integration passed QA, moving to production rollout next sprint.",
+      "q2_relationship": "No issues.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-1f34b8e8",
+      "employee_id": "emp-mia",
+      "timestamp": "2026-06-05T17:00:00",
+      "q1_work": "Wrote the QA test suite for the trial data pipeline, found 3 edge cases in the ingestion logic.",
+      "q2_relationship": "Good working relationship with Tom and the client QA lead.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    },
+    {
+      "id": "chk-1bbd9cc6",
+      "employee_id": "emp-mia",
+      "timestamp": "2026-06-12T17:00:00",
+      "q1_work": "Fixed the edge cases, pipeline now passing full regression suite.",
+      "q2_relationship": "All good.",
+      "q3_sustainability": "Sustainable",
+      "q4_escalation": ""
+    }
+  ],
+  "pm_notes": [
+    {
+      "id": "note-f189b5ab",
+      "pm_name": "Sarah Chen",
+      "employee_id": "emp-aditi",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Standup covered claims dedup progress, on track. Aditi seems fully ramped up.",
+      "engagement_signal": "Strong",
+      "risk_flags": []
+    },
+    {
+      "id": "note-25866b68",
+      "pm_name": "Sarah Chen",
+      "employee_id": "emp-marcus",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Marcus flagged the Snowflake access blocker again this week \u2014 third time. I'm escalating to the client's engagement lead directly tomorrow.",
+      "engagement_signal": "Neutral",
+      "risk_flags": [
+        "Deliverable at risk"
+      ]
+    },
+    {
+      "id": "note-6a904be2",
+      "pm_name": "James Okafor",
+      "employee_id": "emp-sam",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Client wants to expand Sam's scope to Texas warehouses \u2014 good renewal signal, need to formalize a change order so Sam isn't doing unpaid scope expansion.",
+      "engagement_signal": "Strong",
+      "risk_flags": [
+        "Renewal signal (positive)",
+        "Scope drift"
+      ]
+    },
+    {
+      "id": "note-81ab1c9f",
+      "pm_name": "Rachel Torres",
+      "employee_id": "emp-lily",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Lily reported an uncomfortable interaction with her client manager raising his voice on a call. Scheduling a call with her directly and will loop in the account lead about the client manager's conduct.",
+      "engagement_signal": "Strained",
+      "risk_flags": [
+        "Client concern raised"
+      ]
+    },
+    {
+      "id": "note-2f2c8ad4",
+      "pm_name": "Rachel Torres",
+      "employee_id": "emp-neil2",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Neil raised scope concerns about being pulled into an unrelated reporting project. Need to clarify with client whether this is in-contract.",
+      "engagement_signal": "Neutral",
+      "risk_flags": [
+        "Scope drift"
+      ]
+    },
+    {
+      "id": "note-3d714ce2",
+      "pm_name": "Carmen Vela",
+      "employee_id": "emp-tom",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Tom is showing burnout signs \u2014 worked two weekends in a row on the QA backlog. Need to have a direct conversation about workload and possibly bring in support before this becomes a retention risk.",
+      "engagement_signal": "Neutral",
+      "risk_flags": [
+        "Deliverable at risk"
+      ]
+    },
+    {
+      "id": "note-d48ed6f7",
+      "pm_name": "Diana Frost",
+      "employee_id": "emp-dev",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Forecasting model deployed to staging smoothly, client merchandising team very happy.",
+      "engagement_signal": "Strong",
+      "risk_flags": [
+        "Renewal signal (positive)"
+      ]
+    },
+    {
+      "id": "note-b9c3b482",
+      "pm_name": "Rachel Torres",
+      "employee_id": "emp-kevin",
+      "timestamp": "2026-06-05T19:00:00",
+      "note": "Risk model in final compliance review, client compared favorably to their last vendor. Strong renewal signal for Q4.",
+      "engagement_signal": "Strong",
+      "risk_flags": [
+        "Renewal signal (positive)"
+      ]
+    }
+  ],
+  "calendar_tasks": [
+    {
+      "id": "task-1d34f7c7",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-01",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-4320d9e5",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-03",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-63c23790",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-05",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-8bd1700d",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-09",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-7745b227",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-11",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-29f578e8",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-15",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-2d325b22",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-17",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-eaeb97bf",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-19",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-6840c404",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-23",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-c9671a04",
+      "employee_id": "emp-aditi",
+      "date": "2026-06-25",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-fc057cd1",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-01",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-a87317fc",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-03",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-a00fa333",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-05",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-74f12d13",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-09",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-2392a6b7",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-11",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-e4144f4c",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-15",
+      "title": "Data layer work (blocked on Snowflake access)",
+      "status": "blocked",
+      "hours": 5.0
+    },
+    {
+      "id": "task-10a43370",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-17",
+      "title": "Data layer work (blocked on Snowflake access)",
+      "status": "blocked",
+      "hours": 4.0
+    },
+    {
+      "id": "task-f8fb2b98",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-19",
+      "title": "Data layer work (blocked on Snowflake access)",
+      "status": "blocked",
+      "hours": 6.0
+    },
+    {
+      "id": "task-77ec5754",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-23",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-a306ae9f",
+      "employee_id": "emp-marcus",
+      "date": "2026-06-25",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-64edca33",
+      "employee_id": "emp-sam",
+      "date": "2026-06-01",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-2ff9fc41",
+      "employee_id": "emp-sam",
+      "date": "2026-06-03",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-6b54080a",
+      "employee_id": "emp-sam",
+      "date": "2026-06-05",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-227e4978",
+      "employee_id": "emp-sam",
+      "date": "2026-06-09",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-cf8f7b65",
+      "employee_id": "emp-sam",
+      "date": "2026-06-11",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-1915c780",
+      "employee_id": "emp-sam",
+      "date": "2026-06-15",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-743feea9",
+      "employee_id": "emp-sam",
+      "date": "2026-06-17",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-58f41882",
+      "employee_id": "emp-sam",
+      "date": "2026-06-19",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-74e4eb3a",
+      "employee_id": "emp-sam",
+      "date": "2026-06-23",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-33c0a8cb",
+      "employee_id": "emp-sam",
+      "date": "2026-06-25",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-905af4eb",
+      "employee_id": "emp-priya",
+      "date": "2026-06-01",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-adcfdad9",
+      "employee_id": "emp-priya",
+      "date": "2026-06-03",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-52cffcaa",
+      "employee_id": "emp-priya",
+      "date": "2026-06-05",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-c94e9d98",
+      "employee_id": "emp-priya",
+      "date": "2026-06-09",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-59caa3e3",
+      "employee_id": "emp-priya",
+      "date": "2026-06-11",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-27d405dd",
+      "employee_id": "emp-priya",
+      "date": "2026-06-15",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-0117a00b",
+      "employee_id": "emp-priya",
+      "date": "2026-06-17",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-d6f4e0fb",
+      "employee_id": "emp-priya",
+      "date": "2026-06-19",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-11946968",
+      "employee_id": "emp-priya",
+      "date": "2026-06-23",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-4aef80c3",
+      "employee_id": "emp-priya",
+      "date": "2026-06-25",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-c9d375fb",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-01",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-2b07eec1",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-03",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-9fdbb625",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-05",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-525bccec",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-09",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-895ca4f5",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-11",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-32bb46b8",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-15",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-860f4669",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-17",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-22204c82",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-19",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-9c3486a5",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-23",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-8e49ced7",
+      "employee_id": "emp-kevin",
+      "date": "2026-06-25",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-6177dde0",
+      "employee_id": "emp-lily",
+      "date": "2026-06-01",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-434fc5e2",
+      "employee_id": "emp-lily",
+      "date": "2026-06-03",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-6b5aa844",
+      "employee_id": "emp-lily",
+      "date": "2026-06-05",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-2e728b84",
+      "employee_id": "emp-lily",
+      "date": "2026-06-09",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-381a4e38",
+      "employee_id": "emp-lily",
+      "date": "2026-06-11",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-932f54cc",
+      "employee_id": "emp-lily",
+      "date": "2026-06-15",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-a9c7a55c",
+      "employee_id": "emp-lily",
+      "date": "2026-06-17",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-277d5c5a",
+      "employee_id": "emp-lily",
+      "date": "2026-06-19",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-5ecfa801",
+      "employee_id": "emp-lily",
+      "date": "2026-06-23",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-1827e161",
+      "employee_id": "emp-lily",
+      "date": "2026-06-25",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-b897cbf9",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-01",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-710c795d",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-03",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-a8a6c24a",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-05",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-59e54df8",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-09",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-bd68dd8b",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-11",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-6105a70d",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-15",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-061786f8",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-17",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-0ff98992",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-19",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-65d66f71",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-23",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-8458d5e1",
+      "employee_id": "emp-neil2",
+      "date": "2026-06-25",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-928ab0a1",
+      "employee_id": "emp-dev",
+      "date": "2026-06-01",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-2e5a3d74",
+      "employee_id": "emp-dev",
+      "date": "2026-06-03",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-5645b469",
+      "employee_id": "emp-dev",
+      "date": "2026-06-05",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-d10067f1",
+      "employee_id": "emp-dev",
+      "date": "2026-06-09",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-0d241219",
+      "employee_id": "emp-dev",
+      "date": "2026-06-11",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-52e7574d",
+      "employee_id": "emp-dev",
+      "date": "2026-06-15",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-12faa40b",
+      "employee_id": "emp-dev",
+      "date": "2026-06-17",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-8ae8f814",
+      "employee_id": "emp-dev",
+      "date": "2026-06-19",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-c1ee4a6a",
+      "employee_id": "emp-dev",
+      "date": "2026-06-23",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-24e7417b",
+      "employee_id": "emp-dev",
+      "date": "2026-06-25",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-c8d72783",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-01",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-57459157",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-03",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-5ba0da43",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-05",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-862ee31b",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-09",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-e5523409",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-11",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-30a86835",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-15",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-9aa5119c",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-17",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-b0c9f07a",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-19",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-152f7473",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-23",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-afef2010",
+      "employee_id": "emp-ananya",
+      "date": "2026-06-25",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-fae4ee0b",
+      "employee_id": "emp-tom",
+      "date": "2026-06-01",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-1bebdadf",
+      "employee_id": "emp-tom",
+      "date": "2026-06-03",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-5f0f6b24",
+      "employee_id": "emp-tom",
+      "date": "2026-06-05",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-3e633184",
+      "employee_id": "emp-tom",
+      "date": "2026-06-09",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-7709f575",
+      "employee_id": "emp-tom",
+      "date": "2026-06-11",
+      "title": "Documentation",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-0599fdc8",
+      "employee_id": "emp-tom",
+      "date": "2026-06-15",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-85e69027",
+      "employee_id": "emp-tom",
+      "date": "2026-06-17",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-970ae7e8",
+      "employee_id": "emp-tom",
+      "date": "2026-06-19",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-e79815e6",
+      "employee_id": "emp-tom",
+      "date": "2026-06-23",
+      "title": "Client standup",
+      "status": "at_risk",
+      "hours": 5.0
+    },
+    {
+      "id": "task-5f3132bd",
+      "employee_id": "emp-tom",
+      "date": "2026-06-25",
+      "title": "Code review",
+      "status": "at_risk",
+      "hours": 6.0
+    },
+    {
+      "id": "task-d952e73f",
+      "employee_id": "emp-neil",
+      "date": "2026-06-01",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-ff8b0efa",
+      "employee_id": "emp-neil",
+      "date": "2026-06-03",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-1774df90",
+      "employee_id": "emp-neil",
+      "date": "2026-06-05",
+      "title": "Data pipeline build",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-8adb4e56",
+      "employee_id": "emp-neil",
+      "date": "2026-06-09",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-4b43fc80",
+      "employee_id": "emp-neil",
+      "date": "2026-06-11",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-b32c158b",
+      "employee_id": "emp-neil",
+      "date": "2026-06-15",
+      "title": "Dashboard iteration",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-57099be8",
+      "employee_id": "emp-neil",
+      "date": "2026-06-17",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-d98b6245",
+      "employee_id": "emp-neil",
+      "date": "2026-06-19",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-db75aab5",
+      "employee_id": "emp-neil",
+      "date": "2026-06-23",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-76c7ed72",
+      "employee_id": "emp-neil",
+      "date": "2026-06-25",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 7.0
+    },
+    {
+      "id": "task-858c83ef",
+      "employee_id": "emp-mia",
+      "date": "2026-06-01",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-4d47e33a",
+      "employee_id": "emp-mia",
+      "date": "2026-06-03",
+      "title": "Code review",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-b768646b",
+      "employee_id": "emp-mia",
+      "date": "2026-06-05",
+      "title": "Model validation",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-36e559d2",
+      "employee_id": "emp-mia",
+      "date": "2026-06-09",
+      "title": "QA pass",
+      "status": "on_track",
+      "hours": 8.0
+    },
+    {
+      "id": "task-6fa6d738",
+      "employee_id": "emp-mia",
+      "date": "2026-06-11",
+      "title": "Stakeholder demo",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-fc50684b",
+      "employee_id": "emp-mia",
+      "date": "2026-06-15",
+      "title": "Access/onboarding follow-up",
+      "status": "on_track",
+      "hours": 6.0
+    },
+    {
+      "id": "task-70d08b52",
+      "employee_id": "emp-mia",
+      "date": "2026-06-17",
+      "title": "Retrospective",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-1d909297",
+      "employee_id": "emp-mia",
+      "date": "2026-06-19",
+      "title": "Deployment",
+      "status": "on_track",
+      "hours": 4.0
+    },
+    {
+      "id": "task-b1fd786d",
+      "employee_id": "emp-mia",
+      "date": "2026-06-23",
+      "title": "Sprint planning",
+      "status": "on_track",
+      "hours": 5.0
+    },
+    {
+      "id": "task-bd57a0c5",
+      "employee_id": "emp-mia",
+      "date": "2026-06-25",
+      "title": "Client standup",
+      "status": "on_track",
+      "hours": 4.0
+    }
+  ]
+}
