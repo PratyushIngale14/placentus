@@ -72,6 +72,57 @@ div[data-testid="stMetric"] {{
     border-radius: 10px;
     padding: 12px 16px;
 }}
+
+/* Floating PM Agent launcher (SVG chat-bubble icon, bottom-right) */
+.st-key-chat_fab {{
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    width: 60px;
+}}
+.st-key-chat_fab button {{
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50% !important;
+    background: {ui.TRUST} !important;
+    border: none !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    padding: 0 !important;
+}}
+.st-key-chat_fab button p {{
+    display: none;
+}}
+.st-key-chat_fab button::before {{
+    content: "";
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto;
+    background-image: url("{ui.chat_fab_icon_data_uri()}");
+    background-size: contain;
+    background-repeat: no-repeat;
+}}
+
+/* Floating PM Agent chat popup */
+.st-key-chat_panel {{
+    position: fixed;
+    bottom: 100px;
+    right: 28px;
+    width: 380px;
+    max-height: 66vh;
+    overflow-y: auto;
+    background: {ui.PANEL};
+    border: 1px solid {ui.BORDER};
+    border-radius: 14px;
+    padding: 16px 18px 8px 18px;
+    z-index: 9998;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.55);
+}}
+.st-key-chat_panel button[kind="secondary"] {{
+    border: none !important;
+    background: transparent !important;
+}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -100,25 +151,17 @@ store = load_store(st.session_state.api_key or None)
 # Header
 # ----------------------------------------------------------------------------
 
-col_logo, col_key = st.columns([3, 1])
-with col_logo:
-    st.markdown(f"""
-    <div style="display:flex;align-items:baseline;gap:14px;">
-        <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};">Placentus</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
-            ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
-        </span>
-    </div>
-    <div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:4px;">
-        Visibility into embedded consultants — sourced entirely from what they choose to share, never from client systems.
-    </div>
-    """, unsafe_allow_html=True)
-with col_key:
-    st.session_state.api_key = st.text_input(
-        "Demo Anthropic API Key", value=st.session_state.api_key, type="password",
-        placeholder="sk-ant-...", label_visibility="visible",
-        help="Used for the PM agent chat and the semantic categorization pass. Nothing is stored.",
-    )
+st.markdown(f"""
+<div style="display:flex;align-items:baseline;gap:14px;">
+    <span style="font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:{ui.INK};">Placentus</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{ui.MUTED};letter-spacing:0.15em;">
+        ENGAGEMENT INTELLIGENCE · A SULCUS ARCHITECTURE PRODUCT
+    </span>
+</div>
+<div style="font-family:'Geist',sans-serif;font-size:13.5px;color:{ui.MUTED};margin-top:4px;">
+    Visibility into embedded consultants — sourced entirely from what they choose to share, never from client systems.
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
 
@@ -268,21 +311,35 @@ with tab_trust:
             st.caption(f"Routed because: {reasons}")
 
 # ----------------------------------------------------------------------------
-# Floating PM agent chat
+# Floating PM agent chat — popup, scoped to the currently viewed client
 # ----------------------------------------------------------------------------
 
-st.markdown(ui.trust_line_header(), unsafe_allow_html=True)
-st.markdown(ui.section_label("PM Agent · ask about any account, grounded against real check-ins"), unsafe_allow_html=True)
-
-chat_col1, chat_col2 = st.columns([1, 3])
-with chat_col1:
-    if st.button("Open PM Agent" if not st.session_state.chat_open else "Close PM Agent", use_container_width=True):
+with st.container(key="chat_fab"):
+    if st.button(" ", key="chat_fab_btn", help="Open PM Agent"):
         st.session_state.chat_open = not st.session_state.chat_open
         st.rerun()
 
 if st.session_state.chat_open:
-    with st.container(border=True):
-        st.markdown(f'<div style="font-family:JetBrains Mono,monospace;font-size:11px;color:{ui.TRUST};letter-spacing:0.1em;">SULCUS PM AGENT · CLAUDE-POWERED · GROUNDED ANSWERS ONLY</div>', unsafe_allow_html=True)
+    with st.container(key="chat_panel"):
+        head_col, close_col = st.columns([5, 1])
+        with head_col:
+            st.markdown(
+                f'<div style="font-family:JetBrains Mono,monospace;font-size:11px;color:{ui.TRUST};'
+                f'letter-spacing:0.1em;padding-top:6px;">SULCUS PM AGENT · {client.name.upper()}</div>',
+                unsafe_allow_html=True,
+            )
+        with close_col:
+            if st.button("✕", key="chat_close_btn"):
+                st.session_state.chat_open = False
+                st.rerun()
+        st.caption(f"Grounded to {client.name} only — I won't answer about other client accounts.")
+
+        if not st.session_state.api_key:
+            st.session_state.api_key = st.text_input(
+                "Anthropic API Key", value=st.session_state.api_key, type="password",
+                placeholder="sk-ant-...", key="chat_api_key_input",
+                help="Needed to power this chat. Used only for this session, nothing is stored.",
+            )
 
         for role, text, evalr in st.session_state.chat_history[-8:]:
             with st.chat_message(role):
@@ -296,11 +353,22 @@ if st.session_state.chat_open:
                         unsafe_allow_html=True,
                     )
 
-        prompt = st.chat_input("Ask about any client account or Fellow...")
-        if prompt:
+        with st.form(key="chat_form", clear_on_submit=True):
+            prompt = st.text_input(
+                "Message", placeholder=f"Ask about {client.name}'s Fellows...",
+                label_visibility="collapsed",
+            )
+            submitted = st.form_submit_button("Send", use_container_width=True)
+
+        if submitted and prompt:
             st.session_state.chat_history.append(("user", prompt, None))
 
-            all_context_events = store.events  # whole portfolio in context for now
+            # Scoped strictly to the client currently open on the dashboard —
+            # both in the context we feed the model and in the system prompt,
+            # so a PM viewing one account can't pull data on another.
+            client_events = store.events_for_client(client.id)
+            client_emp_names = {e.id: e.name for e in employees}
+
             if not st.session_state.api_key:
                 answer = "Enter an Anthropic API key above to enable the PM agent."
                 evalr = None
@@ -309,14 +377,20 @@ if st.session_state.chat_open:
                     import anthropic
                     client_sdk = anthropic.Anthropic(api_key=st.session_state.api_key)
                     context_text = "\n".join(
-                        f"- [{e.employee_id}] {e.display_text}" for e in all_context_events[:40]
+                        f"- [{client_emp_names.get(e.employee_id, 'Unknown')}] {e.display_text}"
+                        for e in client_events[:40]
                     )
+                    fellow_names = ", ".join(e.name for e in employees) or "none on this account"
                     system = (
                         "You are the Placentus PM agent for a staffing/consulting company. "
-                        "Answer questions about client accounts and Fellows using ONLY the "
-                        "context events provided below. Be concise and direct. If the answer "
-                        "isn't in the context, say so plainly rather than guessing.\n\n"
-                        f"CONTEXT EVENTS:\n{context_text}"
+                        f"You are currently scoped to ONE client account: {client.name} "
+                        f"({client.industry}). The only Fellows you may discuss are: {fellow_names}. "
+                        "Answer questions using ONLY the context events provided below, which "
+                        "already belong to this account. If asked about any other client, "
+                        "another company, or a person not in the list above, politely decline "
+                        "and say you're scoped to this account only. Be concise and direct. If "
+                        "the answer isn't in the context, say so plainly rather than guessing.\n\n"
+                        f"CONTEXT EVENTS ({client.name} only):\n{context_text}"
                     )
                     resp = client_sdk.messages.create(
                         model="claude-sonnet-4-6",
@@ -325,11 +399,12 @@ if st.session_state.chat_open:
                         messages=[{"role": "user", "content": prompt}],
                     )
                     answer = "".join(b.text for b in resp.content if hasattr(b, "text"))
-                    evalr = evaluate_answer(answer, all_context_events)
+                    evalr = evaluate_answer(answer, client_events)
                     if evalr.status == "BLOCKED":
                         answer = (
-                            "I couldn't ground a confident answer to that in the current event log, "
-                            "so I'm not going to guess. Try asking about a specific client or Fellow by name."
+                            "I couldn't ground a confident answer to that in this account's event "
+                            "log, so I'm not going to guess. Try asking about a specific Fellow on "
+                            f"{client.name} by name."
                         )
                 except Exception as exc:
                     answer = f"Agent error: {exc}"
